@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Material Surface Interaction Lab v3</title>
-
+<title>Material Surface Interaction Lab v4</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Segoe UI",sans-serif}
 body{display:flex;width:100vw;height:100vh;background:#111;color:#fff;overflow:hidden}
@@ -50,7 +49,7 @@ body{flex-direction:column}
 <button class="tab-btn" data-mode="3">복사용지</button>
 </div>
 
-<p class="info-text" id="mode-desc">천: 흰 링 없이 천 표면 자체가 부드럽게 눌리고 섬유 격자가 함께 휘어집니다.</p>
+<p class="info-text" id="mode-desc">천: 원형 자국 없이 가로·세로 직조 격자 자체가 눌리고 휘어집니다.</p>
 
 <button class="utility-btn" id="resetBtn">🔄 리셋</button>
 
@@ -62,12 +61,12 @@ body{flex-direction:column}
 <div id="controls-mode1" class="mode-controls control-grid">
 <div class="control-group"><label>눌림 깊이 <span id="v-fabric-depth">46</span></label><input id="fabric-depth" type="range" min="5" max="100" value="46"></div>
 <div class="control-group"><label>눌림 범위 <span id="v-fabric-radius">155</span></label><input id="fabric-radius" type="range" min="70" max="280" value="155"></div>
-<div class="control-group"><label>섬유 격자 밀도 <span id="v-fabric-density">26</span></label><input id="fabric-density" type="range" min="12" max="46" value="26"></div>
-<div class="control-group"><label>천 당김 강도 <span id="v-fabric-pull">58</span></label><input id="fabric-pull" type="range" min="0" max="100" value="58"></div>
-<div class="control-group"><label>주름 미세감 <span id="v-fabric-wrinkle">34</span></label><input id="fabric-wrinkle" type="range" min="0" max="100" value="34"></div>
-<div class="control-group"><label>명암 강도 <span id="v-fabric-shade">42</span></label><input id="fabric-shade" type="range" min="5" max="80" value="42"></div>
-<div class="control-group"><label>복원 속도 <span id="v-fabric-recover">40</span></label><input id="fabric-recover" type="range" min="1" max="100" value="40"></div>
-<div class="control-group"><label>잔상 유지율 <span id="v-fabric-residue">4</span></label><input id="fabric-residue" type="range" min="0" max="50" value="4"></div>
+<div class="control-group"><label>직조 격자 밀도 <span id="v-fabric-density">30</span></label><input id="fabric-density" type="range" min="12" max="50" value="30"></div>
+<div class="control-group"><label>천 당김 강도 <span id="v-fabric-pull">62</span></label><input id="fabric-pull" type="range" min="0" max="100" value="62"></div>
+<div class="control-group"><label>주름 미세감 <span id="v-fabric-wrinkle">28</span></label><input id="fabric-wrinkle" type="range" min="0" max="100" value="28"></div>
+<div class="control-group"><label>명암 강도 <span id="v-fabric-shade">32</span></label><input id="fabric-shade" type="range" min="0" max="80" value="32"></div>
+<div class="control-group"><label>복원 속도 <span id="v-fabric-recover">38</span></label><input id="fabric-recover" type="range" min="1" max="100" value="38"></div>
+<div class="control-group"><label>잔상 유지율 <span id="v-fabric-residue">0</span></label><input id="fabric-residue" type="range" min="0" max="40" value="0"></div>
 </div>
 
 <div id="controls-mode2" class="mode-controls control-grid hidden">
@@ -145,12 +144,12 @@ function switchMode(mode){
  el("controls-mode3").classList.toggle("hidden",mode!==3);
 
  if(mode===1){
-  el("mode-desc").textContent="천: 흰 링 없이 천 표면 자체가 부드럽게 눌리고 섬유 격자가 함께 휘어집니다.";
+  el("mode-desc").textContent="천: 원형 자국 없이 가로·세로 직조 격자 자체가 눌리고 휘어집니다.";
   el("materialColor").value="#c9bba7";
   el("bgColor").value="#141414";
  }
  if(mode===2){
-  el("mode-desc").textContent="고무: 흰 도장 느낌 없이 표면 조명과 곡면이 변하며 눌림과 탄성이 표현됩니다.";
+  el("mode-desc").textContent="고무: 표면 조명과 곡면이 변하며 눌림과 탄성이 표현됩니다.";
   el("materialColor").value="#171717";
   el("bgColor").value="#eeeeee";
  }
@@ -201,7 +200,7 @@ function addImpact(p,dx,dy,dragging){
  if(currentMode===1){
   radius=val("fabric-radius");
   depth=val("fabric-depth");
-  recover=val("fabric-recover")*.0009+.0025;
+  recover=val("fabric-recover")*.0012+.004;
   residue=val("fabric-residue")/100;
  }
  if(currentMode===2){
@@ -228,7 +227,7 @@ function addImpact(p,dx,dy,dragging){
   dragging
  });
 
- if(impacts.length>90)impacts.shift();
+ if(impacts.length>70)impacts.shift();
 }
 
 function updateImpacts(){
@@ -261,29 +260,18 @@ function fabricDisplace(x,y){
   const dirX=d?dx/d:0;
   const dirY=d?dy/d:0;
 
-  const inward=-im.depth*.23*pullPower*fall*s;
+  const inward=-im.depth*.24*pullPower*fall*s;
   const dragX=im.dx*.10*fall*s;
   const dragY=im.dy*.10*fall*s;
 
   px+=dirX*inward+dragX;
   py+=dirY*inward+dragY;
 
-  const basin=-im.depth*.55*fall*s;
-  const micro=Math.sin(d*.18-im.age*.09+im.seed)*im.depth*.045*wrinklePower*fall*s;
+  const basin=-im.depth*.48*fall*s;
+  const micro=Math.sin(d*.17-im.age*.09+im.seed)*im.depth*.025*wrinklePower*fall*s;
   z+=basin+micro;
  }
  return{x:x+px,y:y+py,z};
-}
-
-function fabricNormalShade(x,y){
- const e=3;
- const zL=fabricDisplace(x-e,y).z;
- const zR=fabricDisplace(x+e,y).z;
- const zU=fabricDisplace(x,y-e).z;
- const zD=fabricDisplace(x,y+e).z;
- const dx=(zR-zL)/(e*2);
- const dy=(zD-zU)/(e*2);
- return {dx,dy};
 }
 
 function rubberHeight(x,y){
@@ -308,8 +296,8 @@ function rubberHeight(x,y){
 
 function drawFabric(w,h,rgb){
  const base=rgb;
- const top=shade(base,18);
- const bottom=shade(base,-20);
+ const top=shade(base,14);
+ const bottom=shade(base,-16);
 
  const bg=ctx.createLinearGradient(0,0,w,h);
  bg.addColorStop(0,rgba(top,1));
@@ -318,7 +306,7 @@ function drawFabric(w,h,rgb){
  ctx.fillStyle=bg;
  ctx.fillRect(0,0,w,h);
 
- const spacing=Math.max(9,52-val("fabric-density"));
+ const spacing=Math.max(8,54-val("fabric-density"));
  const shadePower=val("fabric-shade")/100;
 
  ctx.save();
@@ -326,35 +314,35 @@ function drawFabric(w,h,rgb){
 
  for(let y=-spacing;y<h+spacing;y+=spacing){
   ctx.beginPath();
-  for(let x=-30;x<w+30;x+=9){
+  for(let x=-40;x<w+40;x+=8){
    const p=fabricDisplace(x,y);
-   p.y+=Math.sin(x*.035+time*.012)*0.6;
-   if(x<=-30)ctx.moveTo(p.x,p.y);
+   p.y+=Math.sin(x*.032+time*.01)*0.35;
+   if(x<=-40)ctx.moveTo(p.x,p.y);
    else ctx.lineTo(p.x,p.y);
   }
-  ctx.strokeStyle="rgba(255,255,255,.16)";
-  ctx.lineWidth=.9;
+  ctx.strokeStyle="rgba(255,255,255,.19)";
+  ctx.lineWidth=1.05;
   ctx.stroke();
 
-  ctx.strokeStyle="rgba(80,60,40,.13)";
-  ctx.lineWidth=.45;
+  ctx.strokeStyle="rgba(92,72,50,.16)";
+  ctx.lineWidth=.5;
   ctx.stroke();
  }
 
  for(let x=-spacing;x<w+spacing;x+=spacing){
   ctx.beginPath();
-  for(let y=-30;y<h+30;y+=9){
+  for(let y=-40;y<h+40;y+=8){
    const p=fabricDisplace(x,y);
-   p.x+=Math.sin(y*.026)*.45;
-   if(y<=-30)ctx.moveTo(p.x,p.y);
+   p.x+=Math.sin(y*.028+time*.007)*0.28;
+   if(y<=-40)ctx.moveTo(p.x,p.y);
    else ctx.lineTo(p.x,p.y);
   }
-  ctx.strokeStyle="rgba(0,0,0,.13)";
-  ctx.lineWidth=.75;
+  ctx.strokeStyle="rgba(40,30,22,.18)";
+  ctx.lineWidth=.95;
   ctx.stroke();
 
-  ctx.strokeStyle="rgba(255,255,255,.055)";
-  ctx.lineWidth=.35;
+  ctx.strokeStyle="rgba(255,255,255,.075)";
+  ctx.lineWidth=.38;
   ctx.stroke();
  }
 
@@ -363,29 +351,15 @@ function drawFabric(w,h,rgb){
   const a=im.strength;
   const r=im.radius;
 
-  const dent=ctx.createRadialGradient(im.x,im.y,0,im.x,im.y,r);
-  dent.addColorStop(0,`rgba(70,55,42,${.20*shadePower*a})`);
-  dent.addColorStop(.38,`rgba(90,70,55,${.105*shadePower*a})`);
-  dent.addColorStop(.72,`rgba(185,170,145,${.045*shadePower*a})`);
-  dent.addColorStop(1,"rgba(0,0,0,0)");
-  ctx.fillStyle=dent;
+  const shadow=ctx.createRadialGradient(im.x,im.y,0,im.x,im.y,r);
+  shadow.addColorStop(0,`rgba(70,55,42,${.11*shadePower*a})`);
+  shadow.addColorStop(.42,`rgba(95,75,58,${.055*shadePower*a})`);
+  shadow.addColorStop(.82,`rgba(120,100,80,${.018*shadePower*a})`);
+  shadow.addColorStop(1,"rgba(0,0,0,0)");
+  ctx.fillStyle=shadow;
   ctx.beginPath();
-  ctx.ellipse(im.x,im.y,r*.88,r*.78,im.angle*.12,0,Math.PI*2);
+  ctx.ellipse(im.x,im.y,r*.82,r*.76,im.angle*.08,0,Math.PI*2);
   ctx.fill();
-
-  for(let k=0;k<10;k++){
-   const ang=im.angle+(k-5)*.28+Math.sin(im.seed+k)*.18;
-   const len=r*(.25+Math.abs(Math.sin(im.seed+k))*0.38);
-   const ox=Math.cos(ang+Math.PI/2)*Math.sin(im.seed+k*1.7)*r*.35;
-   const oy=Math.sin(ang+Math.PI/2)*Math.sin(im.seed+k*1.7)*r*.35;
-   const cx=im.x+ox,cy=im.y+oy;
-   ctx.strokeStyle=`rgba(75,58,42,${.04*a*shadePower})`;
-   ctx.lineWidth=.8;
-   ctx.beginPath();
-   ctx.moveTo(cx-Math.cos(ang)*len,cy-Math.sin(ang)*len);
-   ctx.lineTo(cx+Math.cos(ang)*len,cy+Math.sin(ang)*len);
-   ctx.stroke();
-  }
  }
 
  ctx.restore();
@@ -399,22 +373,6 @@ function drawRubber(w,h,rgb){
  g.addColorStop(1,rgba(shade(base,-32),1));
  ctx.fillStyle=g;
  ctx.fillRect(0,0,w,h);
-
- const step=18;
- ctx.save();
-
- for(let y=0;y<h;y+=step){
-  ctx.beginPath();
-  for(let x=0;x<w;x+=8){
-   const z=rubberHeight(x,y);
-   const ny=y+z*.12;
-   if(x===0)ctx.moveTo(x,ny);
-   else ctx.lineTo(x,ny);
-  }
-  ctx.strokeStyle="rgba(255,255,255,.035)";
-  ctx.lineWidth=1;
-  ctx.stroke();
- }
 
  for(const im of impacts){
   if(im.mode!==2)continue;
@@ -432,70 +390,19 @@ function drawRubber(w,h,rgb){
   ctx.beginPath();
   ctx.ellipse(im.x,im.y,r*.92,r*.78,im.angle*.08,0,Math.PI*2);
   ctx.fill();
-
-  const spec=ctx.createRadialGradient(im.x-r*.30,im.y-r*.36,0,im.x-r*.12,im.y-r*.12,r*.58);
-  spec.addColorStop(0,`rgba(255,255,255,${.20*gloss*a})`);
-  spec.addColorStop(.45,`rgba(255,255,255,${.05*gloss*a})`);
-  spec.addColorStop(1,"rgba(255,255,255,0)");
-  ctx.fillStyle=spec;
-  ctx.beginPath();
-  ctx.ellipse(im.x-r*.14,im.y-r*.18,r*.38,r*.18,im.angle*.15,0,Math.PI*2);
-  ctx.fill();
  }
 
- ctx.restore();
 }
 
 function drawPaper(w,h,rgb){
  ctx.fillStyle=rgba(rgb,1);
  ctx.fillRect(0,0,w,h);
-
  for(let y=0;y<h;y+=9){
   ctx.strokeStyle="rgba(0,0,0,.018)";
   ctx.beginPath();
   ctx.moveTo(0,y);
   ctx.lineTo(w,y+Math.sin(y*.05));
   ctx.stroke();
- }
-
- for(const im of impacts){
-  if(im.mode!==3)continue;
-  const a=im.strength;
-  const r=im.radius;
-  const sharp=val("paper-sharp")/100;
-
-  const dent=ctx.createRadialGradient(im.x,im.y,0,im.x,im.y,r);
-  dent.addColorStop(0,`rgba(0,0,0,${.16*a})`);
-  dent.addColorStop(.5,`rgba(0,0,0,${.05*a})`);
-  dent.addColorStop(.76,`rgba(255,255,255,${.10*a})`);
-  dent.addColorStop(1,"rgba(255,255,255,0)");
-  ctx.fillStyle=dent;
-  ctx.beginPath();
-  ctx.arc(im.x,im.y,r,0,Math.PI*2);
-  ctx.fill();
-
-  const count=Math.floor(5+val("paper-crumple")/8);
-  for(let i=0;i<count;i++){
-   const ang=im.angle+(i-count/2)*.22+Math.sin(im.seed+i)*.6;
-   const len=r*(.2+Math.abs(Math.sin(im.seed+i))*.6);
-   const ox=Math.cos(ang+Math.PI/2)*(Math.sin(im.seed+i*2)*r*.35);
-   const oy=Math.sin(ang+Math.PI/2)*(Math.sin(im.seed+i*2)*r*.35);
-   const cx=im.x+ox,cy=im.y+oy;
-
-   ctx.strokeStyle=`rgba(0,0,0,${(.10+sharp*.18)*a})`;
-   ctx.lineWidth=.7+sharp*1.2;
-   ctx.beginPath();
-   ctx.moveTo(cx-Math.cos(ang)*len*.5,cy-Math.sin(ang)*len*.5);
-   ctx.lineTo(cx+Math.cos(ang)*len*.5,cy+Math.sin(ang)*len*.5);
-   ctx.stroke();
-
-   ctx.strokeStyle=`rgba(255,255,255,${.15*a})`;
-   ctx.lineWidth=.7;
-   ctx.beginPath();
-   ctx.moveTo(cx-Math.cos(ang)*len*.5+1.4,cy-Math.sin(ang)*len*.5+1.4);
-   ctx.lineTo(cx+Math.cos(ang)*len*.5+1.4,cy+Math.sin(ang)*len*.5+1.4);
-   ctx.stroke();
-  }
  }
 }
 
