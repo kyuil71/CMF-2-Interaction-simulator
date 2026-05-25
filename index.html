@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Material Surface Interaction Lab v2</title>
+<title>Material Surface Interaction Lab v3</title>
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Segoe UI",sans-serif}
 body{display:flex;width:100vw;height:100vh;background:#111;color:#fff;overflow:hidden}
@@ -49,7 +50,7 @@ body{flex-direction:column}
 <button class="tab-btn" data-mode="3">복사용지</button>
 </div>
 
-<p class="info-text" id="mode-desc">천: 손으로 누르면 섬유 격자 자체가 당겨지고 주름이 생기며 천천히 복원됩니다.</p>
+<p class="info-text" id="mode-desc">천: 흰 링 없이 천 표면 자체가 부드럽게 눌리고 섬유 격자가 함께 휘어집니다.</p>
 
 <button class="utility-btn" id="resetBtn">🔄 리셋</button>
 
@@ -59,21 +60,23 @@ body{flex-direction:column}
 </div>
 
 <div id="controls-mode1" class="mode-controls control-grid">
-<div class="control-group"><label>눌림 깊이 <span id="v-fabric-depth">52</span></label><input id="fabric-depth" type="range" min="5" max="120" value="52"></div>
-<div class="control-group"><label>천 당김 범위 <span id="v-fabric-radius">150</span></label><input id="fabric-radius" type="range" min="60" max="260" value="150"></div>
-<div class="control-group"><label>섬유 격자 밀도 <span id="v-fabric-density">24</span></label><input id="fabric-density" type="range" min="12" max="44" value="24"></div>
-<div class="control-group"><label>주름 강도 <span id="v-fabric-wrinkle">55</span></label><input id="fabric-wrinkle" type="range" min="0" max="100" value="55"></div>
-<div class="control-group"><label>복원 속도 <span id="v-fabric-recover">42</span></label><input id="fabric-recover" type="range" min="1" max="100" value="42"></div>
-<div class="control-group"><label>잔상 유지율 <span id="v-fabric-residue">5</span></label><input id="fabric-residue" type="range" min="0" max="70" value="5"></div>
+<div class="control-group"><label>눌림 깊이 <span id="v-fabric-depth">46</span></label><input id="fabric-depth" type="range" min="5" max="100" value="46"></div>
+<div class="control-group"><label>눌림 범위 <span id="v-fabric-radius">155</span></label><input id="fabric-radius" type="range" min="70" max="280" value="155"></div>
+<div class="control-group"><label>섬유 격자 밀도 <span id="v-fabric-density">26</span></label><input id="fabric-density" type="range" min="12" max="46" value="26"></div>
+<div class="control-group"><label>천 당김 강도 <span id="v-fabric-pull">58</span></label><input id="fabric-pull" type="range" min="0" max="100" value="58"></div>
+<div class="control-group"><label>주름 미세감 <span id="v-fabric-wrinkle">34</span></label><input id="fabric-wrinkle" type="range" min="0" max="100" value="34"></div>
+<div class="control-group"><label>명암 강도 <span id="v-fabric-shade">42</span></label><input id="fabric-shade" type="range" min="5" max="80" value="42"></div>
+<div class="control-group"><label>복원 속도 <span id="v-fabric-recover">40</span></label><input id="fabric-recover" type="range" min="1" max="100" value="40"></div>
+<div class="control-group"><label>잔상 유지율 <span id="v-fabric-residue">4</span></label><input id="fabric-residue" type="range" min="0" max="50" value="4"></div>
 </div>
 
 <div id="controls-mode2" class="mode-controls control-grid hidden">
-<div class="control-group"><label>눌림 깊이 <span id="v-rubber-depth">72</span></label><input id="rubber-depth" type="range" min="5" max="140" value="72"></div>
-<div class="control-group"><label>말랑한 범위 <span id="v-rubber-radius">170</span></label><input id="rubber-radius" type="range" min="70" max="300" value="170"></div>
+<div class="control-group"><label>눌림 깊이 <span id="v-rubber-depth">64</span></label><input id="rubber-depth" type="range" min="5" max="120" value="64"></div>
+<div class="control-group"><label>말랑한 범위 <span id="v-rubber-radius">175</span></label><input id="rubber-radius" type="range" min="70" max="300" value="175"></div>
 <div class="control-group"><label>탄성 반발 <span id="v-rubber-elastic">78</span></label><input id="rubber-elastic" type="range" min="5" max="120" value="78"></div>
-<div class="control-group"><label>가장자리 부풀림 <span id="v-rubber-bulge">58</span></label><input id="rubber-bulge" type="range" min="0" max="100" value="58"></div>
-<div class="control-group"><label>표면 광택 <span id="v-rubber-gloss">62</span></label><input id="rubber-gloss" type="range" min="0" max="100" value="62"></div>
-<div class="control-group"><label>복원 속도 <span id="v-rubber-recover">68</span></label><input id="rubber-recover" type="range" min="1" max="100" value="68"></div>
+<div class="control-group"><label>가장자리 부풀림 <span id="v-rubber-bulge">46</span></label><input id="rubber-bulge" type="range" min="0" max="100" value="46"></div>
+<div class="control-group"><label>표면 광택 <span id="v-rubber-gloss">38</span></label><input id="rubber-gloss" type="range" min="0" max="100" value="38"></div>
+<div class="control-group"><label>복원 속도 <span id="v-rubber-recover">72</span></label><input id="rubber-recover" type="range" min="1" max="100" value="72"></div>
 </div>
 
 <div id="controls-mode3" class="mode-controls control-grid hidden">
@@ -116,7 +119,7 @@ function hexToRgb(hex){
  const n=parseInt(c,16);
  return[(n>>16)&255,(n>>8)&255,n&255];
 }
-function color(rgb,a=1){return`rgba(${rgb[0]},${rgb[1]},${rgb[2]},${a})`}
+function rgba(rgb,a=1){return`rgba(${rgb[0]},${rgb[1]},${rgb[2]},${a})`}
 function shade(rgb,v){return rgb.map(x=>Math.max(0,Math.min(255,x+v)))}
 
 function resetSimulation(){impacts=[]}
@@ -142,12 +145,12 @@ function switchMode(mode){
  el("controls-mode3").classList.toggle("hidden",mode!==3);
 
  if(mode===1){
-  el("mode-desc").textContent="천: 손으로 누르면 섬유 격자 자체가 당겨지고 주름이 생기며 천천히 복원됩니다.";
+  el("mode-desc").textContent="천: 흰 링 없이 천 표면 자체가 부드럽게 눌리고 섬유 격자가 함께 휘어집니다.";
   el("materialColor").value="#c9bba7";
   el("bgColor").value="#141414";
  }
  if(mode===2){
-  el("mode-desc").textContent="고무: 표면이 움푹 눌리고 주변이 부풀며 탄성 있게 복원됩니다.";
+  el("mode-desc").textContent="고무: 흰 도장 느낌 없이 표면 조명과 곡면이 변하며 눌림과 탄성이 표현됩니다.";
   el("materialColor").value="#171717";
   el("bgColor").value="#eeeeee";
  }
@@ -193,7 +196,7 @@ canvas.addEventListener("pointerup",()=>{pointerDown=false;lastPointer=null});
 canvas.addEventListener("pointercancel",()=>{pointerDown=false;lastPointer=null});
 
 function addImpact(p,dx,dy,dragging){
- let radius=140,depth=60,recover=.02,residue=0;
+ let radius=150,depth=50,recover=.02,residue=0;
 
  if(currentMode===1){
   radius=val("fabric-radius");
@@ -241,7 +244,10 @@ function updateImpacts(){
 }
 
 function fabricDisplace(x,y){
- let px=0,py=0,z=0,shadeV=0;
+ let px=0,py=0,z=0;
+ const pullPower=val("fabric-pull")/100;
+ const wrinklePower=val("fabric-wrinkle")/100;
+
  for(const im of impacts){
   if(im.mode!==1)continue;
   const dx=x-im.x,dy=y-im.y;
@@ -254,16 +260,30 @@ function fabricDisplace(x,y){
   const s=im.strength;
   const dirX=d?dx/d:0;
   const dirY=d?dy/d:0;
-  const pull=im.depth*.22*fall*s;
 
-  px+=dirX*pull + im.dx*.13*fall*s;
-  py+=dirY*pull + im.dy*.13*fall*s;
+  const inward=-im.depth*.23*pullPower*fall*s;
+  const dragX=im.dx*.10*fall*s;
+  const dragY=im.dy*.10*fall*s;
 
-  const wrinkle=val("fabric-wrinkle")*.08*Math.sin(d*.16-im.age*.12+im.seed)*fall*s;
-  z+=-im.depth*.34*fall*s+wrinkle;
-  shadeV+=z*.006;
+  px+=dirX*inward+dragX;
+  py+=dirY*inward+dragY;
+
+  const basin=-im.depth*.55*fall*s;
+  const micro=Math.sin(d*.18-im.age*.09+im.seed)*im.depth*.045*wrinklePower*fall*s;
+  z+=basin+micro;
  }
- return{x:x+px,y:y+py,z,shadeV};
+ return{x:x+px,y:y+py,z};
+}
+
+function fabricNormalShade(x,y){
+ const e=3;
+ const zL=fabricDisplace(x-e,y).z;
+ const zR=fabricDisplace(x+e,y).z;
+ const zU=fabricDisplace(x,y-e).z;
+ const zD=fabricDisplace(x,y+e).z;
+ const dx=(zR-zL)/(e*2);
+ const dy=(zD-zU)/(e*2);
+ return {dx,dy};
 }
 
 function rubberHeight(x,y){
@@ -276,11 +296,11 @@ function rubberHeight(x,y){
   if(d>r)continue;
 
   const q=1-d/r;
-  const smooth=q*q*(3-2*q);
+  const fall=q*q*(3-2*q);
   const s=im.strength;
-  const center=-im.depth*s*smooth;
-  const ring=Math.exp(-Math.pow((d-r*.54)/(r*.14),2))*im.depth*(val("rubber-bulge")/100)*.55*s;
-  const bounce=Math.sin(im.age*.28+d*.055)*val("rubber-elastic")*.035*s*smooth;
+  const center=-im.depth*.78*fall*s;
+  const ring=Math.exp(-Math.pow((d-r*.55)/(r*.18),2))*im.depth*(val("rubber-bulge")/100)*.32*s;
+  const bounce=Math.sin(im.age*.25+d*.045)*val("rubber-elastic")*.018*s*fall;
   z+=center+ring+bounce;
  }
  return z;
@@ -288,48 +308,53 @@ function rubberHeight(x,y){
 
 function drawFabric(w,h,rgb){
  const base=rgb;
+ const top=shade(base,18);
+ const bottom=shade(base,-20);
+
  const bg=ctx.createLinearGradient(0,0,w,h);
- bg.addColorStop(0,color(shade(base,22),1));
- bg.addColorStop(.5,color(base,1));
- bg.addColorStop(1,color(shade(base,-24),1));
+ bg.addColorStop(0,rgba(top,1));
+ bg.addColorStop(.55,rgba(base,1));
+ bg.addColorStop(1,rgba(bottom,1));
  ctx.fillStyle=bg;
  ctx.fillRect(0,0,w,h);
 
- const spacing=Math.max(10,52-val("fabric-density"));
+ const spacing=Math.max(9,52-val("fabric-density"));
+ const shadePower=val("fabric-shade")/100;
+
  ctx.save();
  ctx.lineCap="round";
 
  for(let y=-spacing;y<h+spacing;y+=spacing){
   ctx.beginPath();
-  for(let x=-30;x<w+30;x+=10){
+  for(let x=-30;x<w+30;x+=9){
    const p=fabricDisplace(x,y);
-   p.y+=Math.sin(x*.035+time*.015)*1.1;
+   p.y+=Math.sin(x*.035+time*.012)*0.6;
    if(x<=-30)ctx.moveTo(p.x,p.y);
    else ctx.lineTo(p.x,p.y);
   }
-  ctx.strokeStyle="rgba(255,255,255,.22)";
-  ctx.lineWidth=1.05;
+  ctx.strokeStyle="rgba(255,255,255,.16)";
+  ctx.lineWidth=.9;
   ctx.stroke();
 
-  ctx.strokeStyle="rgba(80,55,30,.16)";
-  ctx.lineWidth=.55;
+  ctx.strokeStyle="rgba(80,60,40,.13)";
+  ctx.lineWidth=.45;
   ctx.stroke();
  }
 
  for(let x=-spacing;x<w+spacing;x+=spacing){
   ctx.beginPath();
-  for(let y=-30;y<h+30;y+=10){
+  for(let y=-30;y<h+30;y+=9){
    const p=fabricDisplace(x,y);
-   p.x+=Math.sin(y*.026)*.8;
+   p.x+=Math.sin(y*.026)*.45;
    if(y<=-30)ctx.moveTo(p.x,p.y);
    else ctx.lineTo(p.x,p.y);
   }
-  ctx.strokeStyle="rgba(0,0,0,.16)";
-  ctx.lineWidth=.9;
+  ctx.strokeStyle="rgba(0,0,0,.13)";
+  ctx.lineWidth=.75;
   ctx.stroke();
 
-  ctx.strokeStyle="rgba(255,255,255,.08)";
-  ctx.lineWidth=.45;
+  ctx.strokeStyle="rgba(255,255,255,.055)";
+  ctx.lineWidth=.35;
   ctx.stroke();
  }
 
@@ -338,23 +363,29 @@ function drawFabric(w,h,rgb){
   const a=im.strength;
   const r=im.radius;
 
-  const shadow=ctx.createRadialGradient(im.x,im.y,0,im.x,im.y,r);
-  shadow.addColorStop(0,`rgba(0,0,0,${.10*a})`);
-  shadow.addColorStop(.45,`rgba(0,0,0,${.045*a})`);
-  shadow.addColorStop(.72,`rgba(255,255,255,${.055*a})`);
-  shadow.addColorStop(1,"rgba(255,255,255,0)");
-  ctx.fillStyle=shadow;
+  const dent=ctx.createRadialGradient(im.x,im.y,0,im.x,im.y,r);
+  dent.addColorStop(0,`rgba(70,55,42,${.20*shadePower*a})`);
+  dent.addColorStop(.38,`rgba(90,70,55,${.105*shadePower*a})`);
+  dent.addColorStop(.72,`rgba(185,170,145,${.045*shadePower*a})`);
+  dent.addColorStop(1,"rgba(0,0,0,0)");
+  ctx.fillStyle=dent;
   ctx.beginPath();
-  ctx.arc(im.x,im.y,r,0,Math.PI*2);
+  ctx.ellipse(im.x,im.y,r*.88,r*.78,im.angle*.12,0,Math.PI*2);
   ctx.fill();
 
-  const hi=ctx.createRadialGradient(im.x-r*.28,im.y-r*.32,0,im.x,im.y,r*.95);
-  hi.addColorStop(0,`rgba(255,255,255,${.10*a})`);
-  hi.addColorStop(.7,"rgba(255,255,255,0)");
-  ctx.fillStyle=hi;
-  ctx.beginPath();
-  ctx.arc(im.x,im.y,r,0,Math.PI*2);
-  ctx.fill();
+  for(let k=0;k<10;k++){
+   const ang=im.angle+(k-5)*.28+Math.sin(im.seed+k)*.18;
+   const len=r*(.25+Math.abs(Math.sin(im.seed+k))*0.38);
+   const ox=Math.cos(ang+Math.PI/2)*Math.sin(im.seed+k*1.7)*r*.35;
+   const oy=Math.sin(ang+Math.PI/2)*Math.sin(im.seed+k*1.7)*r*.35;
+   const cx=im.x+ox,cy=im.y+oy;
+   ctx.strokeStyle=`rgba(75,58,42,${.04*a*shadePower})`;
+   ctx.lineWidth=.8;
+   ctx.beginPath();
+   ctx.moveTo(cx-Math.cos(ang)*len,cy-Math.sin(ang)*len);
+   ctx.lineTo(cx+Math.cos(ang)*len,cy+Math.sin(ang)*len);
+   ctx.stroke();
+  }
  }
 
  ctx.restore();
@@ -363,9 +394,9 @@ function drawFabric(w,h,rgb){
 function drawRubber(w,h,rgb){
  const base=rgb;
  const g=ctx.createLinearGradient(0,0,w,h);
- g.addColorStop(0,color(shade(base,42),1));
- g.addColorStop(.38,color(base,1));
- g.addColorStop(1,color(shade(base,-42),1));
+ g.addColorStop(0,rgba(shade(base,34),1));
+ g.addColorStop(.42,rgba(base,1));
+ g.addColorStop(1,rgba(shade(base,-32),1));
  ctx.fillStyle=g;
  ctx.fillRect(0,0,w,h);
 
@@ -376,26 +407,11 @@ function drawRubber(w,h,rgb){
   ctx.beginPath();
   for(let x=0;x<w;x+=8){
    const z=rubberHeight(x,y);
-   const nx=x;
-   const ny=y+z*.16;
-   if(x===0)ctx.moveTo(nx,ny);
-   else ctx.lineTo(nx,ny);
+   const ny=y+z*.12;
+   if(x===0)ctx.moveTo(x,ny);
+   else ctx.lineTo(x,ny);
   }
-  ctx.strokeStyle="rgba(255,255,255,.045)";
-  ctx.lineWidth=1;
-  ctx.stroke();
- }
-
- for(let x=0;x<w;x+=step){
-  ctx.beginPath();
-  for(let y=0;y<h;y+=8){
-   const z=rubberHeight(x,y);
-   const nx=x+z*.04;
-   const ny=y;
-   if(y===0)ctx.moveTo(nx,ny);
-   else ctx.lineTo(nx,ny);
-  }
-  ctx.strokeStyle="rgba(0,0,0,.08)";
+  ctx.strokeStyle="rgba(255,255,255,.035)";
   ctx.lineWidth=1;
   ctx.stroke();
  }
@@ -406,38 +422,32 @@ function drawRubber(w,h,rgb){
   const r=im.radius;
   const gloss=val("rubber-gloss")/100;
 
-  const dent=ctx.createRadialGradient(im.x,im.y,0,im.x,im.y,r);
-  dent.addColorStop(0,`rgba(0,0,0,${.34*a})`);
-  dent.addColorStop(.32,`rgba(0,0,0,${.18*a})`);
-  dent.addColorStop(.55,`rgba(255,255,255,${.12*a})`);
-  dent.addColorStop(.78,`rgba(0,0,0,${.08*a})`);
+  const dent=ctx.createRadialGradient(im.x-r*.18,im.y-r*.22,0,im.x,im.y,r);
+  dent.addColorStop(0,`rgba(255,255,255,${.10*gloss*a})`);
+  dent.addColorStop(.25,`rgba(0,0,0,${.25*a})`);
+  dent.addColorStop(.54,`rgba(0,0,0,${.14*a})`);
+  dent.addColorStop(.76,`rgba(255,255,255,${.07*gloss*a})`);
   dent.addColorStop(1,"rgba(255,255,255,0)");
   ctx.fillStyle=dent;
   ctx.beginPath();
-  ctx.arc(im.x,im.y,r,0,Math.PI*2);
+  ctx.ellipse(im.x,im.y,r*.92,r*.78,im.angle*.08,0,Math.PI*2);
   ctx.fill();
 
-  const spec=ctx.createRadialGradient(im.x-r*.28,im.y-r*.35,0,im.x,im.y,r*.8);
-  spec.addColorStop(0,`rgba(255,255,255,${.28*gloss*a})`);
-  spec.addColorStop(.25,`rgba(255,255,255,${.10*gloss*a})`);
-  spec.addColorStop(.72,"rgba(255,255,255,0)");
+  const spec=ctx.createRadialGradient(im.x-r*.30,im.y-r*.36,0,im.x-r*.12,im.y-r*.12,r*.58);
+  spec.addColorStop(0,`rgba(255,255,255,${.20*gloss*a})`);
+  spec.addColorStop(.45,`rgba(255,255,255,${.05*gloss*a})`);
+  spec.addColorStop(1,"rgba(255,255,255,0)");
   ctx.fillStyle=spec;
   ctx.beginPath();
-  ctx.arc(im.x,im.y,r*.9,0,Math.PI*2);
+  ctx.ellipse(im.x-r*.14,im.y-r*.18,r*.38,r*.18,im.angle*.15,0,Math.PI*2);
   ctx.fill();
-
-  ctx.strokeStyle=`rgba(255,255,255,${.12*gloss*a})`;
-  ctx.lineWidth=1.5;
-  ctx.beginPath();
-  ctx.ellipse(im.x,im.y,r*.48,r*.28,Math.sin(im.age*.08)*.15,0,Math.PI*2);
-  ctx.stroke();
  }
 
  ctx.restore();
 }
 
 function drawPaper(w,h,rgb){
- ctx.fillStyle=color(rgb,1);
+ ctx.fillStyle=rgba(rgb,1);
  ctx.fillRect(0,0,w,h);
 
  for(let y=0;y<h;y+=9){
