@@ -3,187 +3,34 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Material Interaction Lab - Fabric Rubber Paper</title>
+<title>Material Surface Deformation Lab</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", sans-serif;
-}
-
-body {
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    background: #111;
-    color: #fff;
-    overflow: hidden;
-}
-
-#canvas-container {
-    flex: 1;
-    position: relative;
-    background: #111;
-    overflow: hidden;
-}
-
-canvas {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    cursor: crosshair;
-    touch-action: none;
-}
-
-#control-panel {
-    width: 50vw;
-    max-width: 660px;
-    min-width: 420px;
-    background: #202020;
-    border-left: 1px solid #333;
-    padding: 22px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    overflow-y: auto;
-    transition: all 0.3s ease;
-}
-
-#control-panel.collapsed {
-    width: 0;
-    min-width: 0;
-    padding: 0;
-    border-left: none;
-    overflow: hidden;
-}
-
-#floating-toggle {
-    position: absolute;
-    top: 14px;
-    right: 16px;
-    z-index: 50;
-    background: #007bff;
-    border: none;
-    color: white;
-    padding: 9px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 700;
-}
-
-h3 {
-    margin-top: 34px;
-    font-size: 20px;
-}
-
-.tabs {
-    display: flex;
-    gap: 8px;
-}
-
-.tab-btn {
-    flex: 1;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    background: #333;
-    color: #aaa;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.tab-btn.active {
-    background: #007bff;
-    color: white;
-}
-
-.info-text {
-    font-size: 13px;
-    line-height: 1.5;
-    color: #bbb;
-    background: #2a2a2a;
-    padding: 12px;
-    border-radius: 8px;
-}
-
-.control-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-}
-
-.control-group {
-    background: #2b2b2b;
-    padding: 12px;
-    border-radius: 9px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.control-group label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-    color: #ccc;
-}
-
-.control-group span {
-    color: #4da3ff;
-    font-weight: 700;
-}
-
-input[type="range"] {
-    width: 100%;
-}
-
-input[type="color"] {
-    width: 100%;
-    height: 38px;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-}
-
-.utility-btn {
-    padding: 11px 14px;
-    border: 1px solid #444;
-    border-radius: 8px;
-    background: #333;
-    color: white;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.hidden {
-    display: none !important;
-}
-
-@media (max-width: 768px) {
-    body {
-        flex-direction: column;
-    }
-
-    #control-panel {
-        width: 100%;
-        max-width: none;
-        min-width: 0;
-        height: 50vh;
-        border-left: none;
-        border-top: 1px solid #333;
-    }
-
-    #control-panel.collapsed {
-        height: 0;
-        width: 100%;
-    }
-
-    .control-grid {
-        grid-template-columns: 1fr;
-    }
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Segoe UI",sans-serif}
+body{display:flex;width:100vw;height:100vh;background:#111;color:#fff;overflow:hidden}
+#canvas-container{flex:1;position:relative;background:#111;overflow:hidden}
+canvas{position:absolute;inset:0;width:100%;height:100%;cursor:crosshair;touch-action:none}
+#control-panel{width:50vw;max-width:680px;min-width:420px;background:#202020;border-left:1px solid #333;padding:22px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;transition:.3s}
+#control-panel.collapsed{width:0;min-width:0;padding:0;border-left:none;overflow:hidden}
+#floating-toggle{position:absolute;top:14px;right:16px;z-index:50;background:#007bff;border:none;color:#fff;padding:9px 14px;border-radius:8px;cursor:pointer;font-weight:700}
+h3{margin-top:34px;font-size:20px}
+.tabs{display:flex;gap:8px}
+.tab-btn{flex:1;padding:12px;border:none;border-radius:8px;background:#333;color:#aaa;font-weight:700;cursor:pointer}
+.tab-btn.active{background:#007bff;color:#fff}
+.info-text{font-size:13px;line-height:1.5;color:#bbb;background:#2a2a2a;padding:12px;border-radius:8px}
+.control-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.control-group{background:#2b2b2b;padding:12px;border-radius:9px;display:flex;flex-direction:column;gap:8px}
+.control-group label{display:flex;justify-content:space-between;font-size:13px;color:#ccc}
+.control-group span{color:#4da3ff;font-weight:700}
+input[type=range]{width:100%}
+input[type=color]{width:100%;height:38px;border:none;background:transparent;cursor:pointer}
+.utility-btn{padding:11px 14px;border:1px solid #444;border-radius:8px;background:#333;color:#fff;font-weight:700;cursor:pointer}
+.hidden{display:none!important}
+@media(max-width:768px){
+body{flex-direction:column}
+#control-panel{width:100%;max-width:none;min-width:0;height:50vh;border-left:none;border-top:1px solid #333}
+#control-panel.collapsed{height:0;width:100%}
+.control-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -196,7 +43,7 @@ input[type="color"] {
 </div>
 
 <div id="control-panel">
-    <h3>Material Interaction Lab</h3>
+    <h3>Material Surface Deformation Lab</h3>
 
     <div class="tabs">
         <button class="tab-btn active" data-mode="1">천</button>
@@ -205,7 +52,7 @@ input[type="color"] {
     </div>
 
     <p class="info-text" id="mode-desc">
-        천: 드래그하면 섬유 결을 따라 주름과 장력이 퍼지는 효과입니다.
+        천: 표면 전체가 눌리고 당겨지며, 섬유 결과 주름이 자연스럽게 반응합니다.
     </p>
 
     <button class="utility-btn" id="resetBtn">🔄 리셋</button>
@@ -213,40 +60,39 @@ input[type="color"] {
     <div class="control-grid">
         <div class="control-group">
             <label>소재 색상</label>
-            <input type="color" id="materialColor" value="#d9d2c3">
+            <input type="color" id="materialColor" value="#cfc5b4">
         </div>
-
         <div class="control-group">
             <label>배경 색상</label>
-            <input type="color" id="bgColor" value="#181818">
+            <input type="color" id="bgColor" value="#151515">
         </div>
     </div>
 
     <div id="controls-mode1" class="mode-controls control-grid">
-        <div class="control-group"><label>주름 강도 <span id="v-fabric-fold">45</span></label><input id="fabric-fold" type="range" min="5" max="100" value="45"></div>
-        <div class="control-group"><label>장력 반응 <span id="v-fabric-tension">60</span></label><input id="fabric-tension" type="range" min="5" max="100" value="60"></div>
-        <div class="control-group"><label>섬유 결 밀도 <span id="v-fabric-fiber">32</span></label><input id="fabric-fiber" type="range" min="5" max="80" value="32"></div>
-        <div class="control-group"><label>부드러움 <span id="v-fabric-softness">55</span></label><input id="fabric-softness" type="range" min="5" max="100" value="55"></div>
-        <div class="control-group"><label>주름 지속 시간 <span id="v-fabric-life">8</span></label><input id="fabric-life" type="range" min="2" max="30" value="8"></div>
-        <div class="control-group"><label>잔상 유지율 <span id="v-fabric-residue">18</span></label><input id="fabric-residue" type="range" min="0" max="80" value="18"></div>
+        <div class="control-group"><label>눌림 깊이 <span id="v-fabric-depth">42</span></label><input id="fabric-depth" type="range" min="5" max="100" value="42"></div>
+        <div class="control-group"><label>장력 / 당김 <span id="v-fabric-tension">62</span></label><input id="fabric-tension" type="range" min="5" max="100" value="62"></div>
+        <div class="control-group"><label>섬유 결 밀도 <span id="v-fabric-density">34</span></label><input id="fabric-density" type="range" min="12" max="70" value="34"></div>
+        <div class="control-group"><label>주름 진폭 <span id="v-fabric-wrinkle">48</span></label><input id="fabric-wrinkle" type="range" min="0" max="100" value="48"></div>
+        <div class="control-group"><label>복원 속도 <span id="v-fabric-recover">38</span></label><input id="fabric-recover" type="range" min="1" max="100" value="38"></div>
+        <div class="control-group"><label>잔상 유지율 <span id="v-fabric-residue">12</span></label><input id="fabric-residue" type="range" min="0" max="80" value="12"></div>
     </div>
 
     <div id="controls-mode2" class="mode-controls control-grid hidden">
-        <div class="control-group"><label>탄성 강도 <span id="v-rubber-elastic">75</span></label><input id="rubber-elastic" type="range" min="5" max="120" value="75"></div>
-        <div class="control-group"><label>늘어남 정도 <span id="v-rubber-stretch">65</span></label><input id="rubber-stretch" type="range" min="5" max="140" value="65"></div>
-        <div class="control-group"><label>반동 속도 <span id="v-rubber-bounce">65</span></label><input id="rubber-bounce" type="range" min="5" max="100" value="65"></div>
-        <div class="control-group"><label>표면 말랑함 <span id="v-rubber-soft">45</span></label><input id="rubber-soft" type="range" min="5" max="100" value="45"></div>
-        <div class="control-group"><label>덩어리 크기 <span id="v-rubber-size">80</span></label><input id="rubber-size" type="range" min="20" max="180" value="80"></div>
-        <div class="control-group"><label>잔상 유지율 <span id="v-rubber-residue">8</span></label><input id="rubber-residue" type="range" min="0" max="70" value="8"></div>
+        <div class="control-group"><label>눌림 깊이 <span id="v-rubber-depth">68</span></label><input id="rubber-depth" type="range" min="5" max="120" value="68"></div>
+        <div class="control-group"><label>탄성 반발 <span id="v-rubber-elastic">82</span></label><input id="rubber-elastic" type="range" min="5" max="120" value="82"></div>
+        <div class="control-group"><label>말랑함 <span id="v-rubber-soft">64</span></label><input id="rubber-soft" type="range" min="5" max="100" value="64"></div>
+        <div class="control-group"><label>부풀어오름 <span id="v-rubber-bulge">55</span></label><input id="rubber-bulge" type="range" min="0" max="100" value="55"></div>
+        <div class="control-group"><label>복원 속도 <span id="v-rubber-recover">70</span></label><input id="rubber-recover" type="range" min="1" max="100" value="70"></div>
+        <div class="control-group"><label>잔상 유지율 <span id="v-rubber-residue">4</span></label><input id="rubber-residue" type="range" min="0" max="60" value="4"></div>
     </div>
 
     <div id="controls-mode3" class="mode-controls control-grid hidden">
-        <div class="control-group"><label>접힘 깊이 <span id="v-paper-fold">55</span></label><input id="paper-fold" type="range" min="5" max="120" value="55"></div>
-        <div class="control-group"><label>구김 복잡도 <span id="v-paper-crumple">38</span></label><input id="paper-crumple" type="range" min="5" max="100" value="38"></div>
-        <div class="control-group"><label>마찰 자국 <span id="v-paper-friction">45</span></label><input id="paper-friction" type="range" min="0" max="100" value="45"></div>
-        <div class="control-group"><label>종이 건조감 <span id="v-paper-dry">65</span></label><input id="paper-dry" type="range" min="5" max="100" value="65"></div>
-        <div class="control-group"><label>선명도 <span id="v-paper-sharp">60</span></label><input id="paper-sharp" type="range" min="5" max="100" value="60"></div>
-        <div class="control-group"><label>잔상 유지율 <span id="v-paper-residue">45</span></label><input id="paper-residue" type="range" min="0" max="90" value="45"></div>
+        <div class="control-group"><label>압흔 깊이 <span id="v-paper-depth">42</span></label><input id="paper-depth" type="range" min="5" max="100" value="42"></div>
+        <div class="control-group"><label>구김 복잡도 <span id="v-paper-crumple">46</span></label><input id="paper-crumple" type="range" min="5" max="100" value="46"></div>
+        <div class="control-group"><label>접힘 선명도 <span id="v-paper-sharp">68</span></label><input id="paper-sharp" type="range" min="5" max="100" value="68"></div>
+        <div class="control-group"><label>종이 거칠기 <span id="v-paper-grain">38</span></label><input id="paper-grain" type="range" min="0" max="100" value="38"></div>
+        <div class="control-group"><label>복원 속도 <span id="v-paper-recover">16</span></label><input id="paper-recover" type="range" min="0" max="100" value="16"></div>
+        <div class="control-group"><label>잔상 유지율 <span id="v-paper-residue">38</span></label><input id="paper-residue" type="range" min="0" max="90" value="38"></div>
     </div>
 </div>
 
@@ -257,461 +103,434 @@ const panel = document.getElementById("control-panel");
 const toggleBtn = document.getElementById("floating-toggle");
 
 let currentMode = 1;
-let fabricMarks = [];
-let rubberBlobs = [];
-let paperMarks = [];
-let lastPoint = null;
+let impacts = [];
+let pointerDown = false;
+let lastPointer = null;
+let time = 0;
 
-function el(id) {
-    return document.getElementById(id);
-}
+function el(id){return document.getElementById(id)}
+function val(id){return Number(el(id).value)}
 
-function val(id) {
-    return Number(el(id).value);
-}
-
-function resizeCanvas() {
+function resizeCanvas(){
     const rect = canvas.getBoundingClientRect();
     const dpr = window.devicePixelRatio || 1;
     canvas.width = rect.width * dpr;
     canvas.height = rect.height * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
 }
-
 window.addEventListener("resize", resizeCanvas);
 setTimeout(resizeCanvas, 50);
 
-function hexToRgb(hex) {
-    let c = hex.replace("#", "");
-    if (c.length === 3) c = c.split("").map(x => x + x).join("");
-    const n = parseInt(c, 16);
-    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+function hexToRgb(hex){
+    let c = hex.replace("#","");
+    if(c.length===3)c=c.split("").map(x=>x+x).join("");
+    const n=parseInt(c,16);
+    return [(n>>16)&255,(n>>8)&255,n&255];
 }
 
-function resetSimulation() {
-    fabricMarks = [];
-    rubberBlobs = [];
-    paperMarks = [];
-    lastPoint = null;
+function rgbString(rgb,a=1){
+    return `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${a})`;
 }
+
+function shade(rgb, amount){
+    return [
+        Math.max(0,Math.min(255,rgb[0]+amount)),
+        Math.max(0,Math.min(255,rgb[1]+amount)),
+        Math.max(0,Math.min(255,rgb[2]+amount))
+    ];
+}
+
+function resetSimulation(){impacts=[]}
 
 el("resetBtn").addEventListener("click", resetSimulation);
 
-toggleBtn.addEventListener("click", () => {
+toggleBtn.addEventListener("click",()=>{
     panel.classList.toggle("collapsed");
     toggleBtn.textContent = panel.classList.contains("collapsed") ? "설정창 열기 ▶" : "설정창 접기 ◀";
-    setTimeout(resizeCanvas, 350);
+    setTimeout(resizeCanvas,350);
 });
 
-document.querySelectorAll(".tab-btn").forEach(btn => {
-    btn.addEventListener("click", () => switchMode(Number(btn.dataset.mode)));
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>switchMode(Number(btn.dataset.mode)));
 });
 
-function switchMode(mode) {
+function switchMode(mode){
     currentMode = mode;
-
-    document.querySelectorAll(".tab-btn").forEach(btn => {
-        btn.classList.toggle("active", Number(btn.dataset.mode) === mode);
+    document.querySelectorAll(".tab-btn").forEach(btn=>{
+        btn.classList.toggle("active",Number(btn.dataset.mode)===mode);
     });
 
-    el("controls-mode1").classList.toggle("hidden", mode !== 1);
-    el("controls-mode2").classList.toggle("hidden", mode !== 2);
-    el("controls-mode3").classList.toggle("hidden", mode !== 3);
+    el("controls-mode1").classList.toggle("hidden",mode!==1);
+    el("controls-mode2").classList.toggle("hidden",mode!==2);
+    el("controls-mode3").classList.toggle("hidden",mode!==3);
 
-    if (mode === 1) {
-        el("mode-desc").textContent = "천: 드래그하면 섬유 결을 따라 주름과 장력이 퍼지는 효과입니다.";
-        el("materialColor").value = "#d9d2c3";
-        el("bgColor").value = "#181818";
+    if(mode===1){
+        el("mode-desc").textContent="천: 표면 전체가 눌리고 당겨지며, 섬유 결과 주름이 자연스럽게 반응합니다.";
+        el("materialColor").value="#cfc5b4";
+        el("bgColor").value="#151515";
     }
-
-    if (mode === 2) {
-        el("mode-desc").textContent = "고무: 누르면 늘어나고 손을 떼면 탄성 있게 복원되는 말랑한 효과입니다.";
-        el("materialColor").value = "#101010";
-        el("bgColor").value = "#f3f3f3";
+    if(mode===2){
+        el("mode-desc").textContent="고무: 표면이 움푹 눌리고 주변이 부풀며, 손을 떼면 탄성 있게 복원됩니다.";
+        el("materialColor").value="#151515";
+        el("bgColor").value="#f0f0f0";
     }
-
-    if (mode === 3) {
-        el("mode-desc").textContent = "복사용지: 터치와 드래그에 따라 접힘, 구김, 마찰 자국이 생기는 효과입니다.";
-        el("materialColor").value = "#ffffff";
-        el("bgColor").value = "#dcdcdc";
+    if(mode===3){
+        el("mode-desc").textContent="복사용지: 흰 종이 표면에 압흔, 접힘, 미세한 구김이 남는 효과입니다.";
+        el("materialColor").value="#ffffff";
+        el("bgColor").value="#d6d6d6";
     }
-
     resetSimulation();
 }
 
-document.querySelectorAll("input[type='range']").forEach(input => {
-    const valueText = el("v-" + input.id);
-    if (valueText) {
-        valueText.textContent = input.value;
-        input.addEventListener("input", () => valueText.textContent = input.value);
+document.querySelectorAll("input[type='range']").forEach(input=>{
+    const v=el("v-"+input.id);
+    if(v){
+        v.textContent=input.value;
+        input.addEventListener("input",()=>v.textContent=input.value);
     }
 });
 
-function pointerPos(e) {
-    const rect = canvas.getBoundingClientRect();
-    return {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
-    };
+function pointerPos(e){
+    const rect=canvas.getBoundingClientRect();
+    return {x:e.clientX-rect.left,y:e.clientY-rect.top};
 }
 
-canvas.addEventListener("pointerdown", e => {
+canvas.addEventListener("pointerdown",e=>{
     e.preventDefault();
-    const p = pointerPos(e);
-    lastPoint = p;
-    createEffect(p, p, false);
+    pointerDown=true;
+    const p=pointerPos(e);
+    lastPointer=p;
+    addImpact(p,0,0,false);
 });
 
-canvas.addEventListener("pointermove", e => {
-    if (e.buttons === 1 || e.pointerType === "touch") {
-        e.preventDefault();
-        const p = pointerPos(e);
-        createEffect(p, lastPoint || p, true);
-        lastPoint = p;
+canvas.addEventListener("pointermove",e=>{
+    if(!pointerDown && e.pointerType!=="touch")return;
+    e.preventDefault();
+    const p=pointerPos(e);
+    const prev=lastPointer || p;
+    const dx=p.x-prev.x;
+    const dy=p.y-prev.y;
+    addImpact(p,dx,dy,true);
+    lastPointer=p;
+});
+
+canvas.addEventListener("pointerup",()=>{pointerDown=false;lastPointer=null});
+canvas.addEventListener("pointercancel",()=>{pointerDown=false;lastPointer=null});
+
+function addImpact(p,dx,dy,dragging){
+    let radius=120;
+    let depth=40;
+    let recover=0.02;
+    let residue=0;
+
+    if(currentMode===1){
+        radius=90+val("fabric-tension")*1.1;
+        depth=val("fabric-depth");
+        recover=val("fabric-recover")*0.0009+0.003;
+        residue=val("fabric-residue")/100;
     }
-});
-
-canvas.addEventListener("pointerup", () => {
-    lastPoint = null;
-});
-
-canvas.addEventListener("pointercancel", () => {
-    lastPoint = null;
-});
-
-function createEffect(p, prev, dragging) {
-    if (currentMode === 1) createFabricEffect(p, prev, dragging);
-    if (currentMode === 2) createRubberEffect(p, prev, dragging);
-    if (currentMode === 3) createPaperEffect(p, prev, dragging);
-}
-
-function createFabricEffect(p, prev, dragging) {
-    const dx = p.x - prev.x;
-    const dy = p.y - prev.y;
-    const angle = Math.atan2(dy, dx) || Math.random() * Math.PI * 2;
-    const speed = Math.hypot(dx, dy);
-
-    const fold = val("fabric-fold");
-    const fiber = val("fabric-fiber");
-    const tension = val("fabric-tension");
-    const softness = val("fabric-softness");
-
-    const count = dragging ? Math.max(2, Math.floor(fiber / 8)) : Math.max(5, Math.floor(fiber / 4));
-
-    for (let i = 0; i < count; i++) {
-        const offset = (Math.random() - 0.5) * fold * 1.4;
-        const length = fold * (0.7 + Math.random() * 1.8) + speed * 1.4;
-        const wave = softness * (0.05 + Math.random() * 0.08);
-
-        fabricMarks.push({
-            x: p.x + Math.cos(angle + Math.PI / 2) * offset,
-            y: p.y + Math.sin(angle + Math.PI / 2) * offset,
-            angle: angle + (Math.random() - 0.5) * 0.45,
-            length,
-            wave,
-            phase: Math.random() * Math.PI * 2,
-            width: 0.8 + Math.random() * 2.2,
-            alpha: 0.75 + Math.random() * 0.2,
-            tension: tension / 100,
-            frozen: false
-        });
+    if(currentMode===2){
+        radius=100+val("rubber-soft")*1.4;
+        depth=val("rubber-depth");
+        recover=val("rubber-recover")*0.0012+0.004;
+        residue=val("rubber-residue")/100;
     }
-}
+    if(currentMode===3){
+        radius=80+val("paper-crumple")*0.8;
+        depth=val("paper-depth");
+        recover=val("paper-recover")*0.0006;
+        residue=val("paper-residue")/100;
+    }
 
-function createRubberEffect(p, prev, dragging) {
-    const dx = p.x - prev.x;
-    const dy = p.y - prev.y;
-    const angle = Math.atan2(dy, dx) || 0;
-    const stretch = val("rubber-stretch");
-    const size = val("rubber-size");
-
-    rubberBlobs.push({
-        x: p.x,
-        y: p.y,
-        baseX: p.x,
-        baseY: p.y,
-        vx: Math.cos(angle) * stretch * 0.08,
-        vy: Math.sin(angle) * stretch * 0.08,
-        r: size * (0.35 + Math.random() * 0.45),
-        scaleX: 1 + stretch / 100 * (dragging ? 1.25 : 0.7),
-        scaleY: 1 / (1 + stretch / 180),
-        angle,
-        wobble: Math.random() * Math.PI * 2,
-        alpha: 0.95,
-        frozen: false
-    });
-}
-
-function createPaperEffect(p, prev, dragging) {
-    const dx = p.x - prev.x;
-    const dy = p.y - prev.y;
-    const angle = Math.atan2(dy, dx) || Math.random() * Math.PI * 2;
-
-    const fold = val("paper-fold");
-    const crumple = val("paper-crumple");
-    const friction = val("paper-friction");
-
-    const mainLength = fold * (0.8 + Math.random() * 1.4);
-
-    paperMarks.push({
-        type: "fold",
-        x: p.x,
-        y: p.y,
-        angle,
-        length: mainLength,
-        alpha: 0.9,
-        width: 1.2 + val("paper-sharp") / 40,
-        frozen: false
+    impacts.push({
+        mode:currentMode,
+        x:p.x,
+        y:p.y,
+        dx,
+        dy,
+        radius,
+        depth,
+        age:0,
+        strength:1,
+        recover,
+        residue,
+        dragging,
+        seed:Math.random()*1000,
+        angle:Math.atan2(dy,dx)||Math.random()*Math.PI*2
     });
 
-    const count = dragging ? Math.floor(crumple / 8) : Math.floor(crumple / 4);
-
-    for (let i = 0; i < count; i++) {
-        paperMarks.push({
-            type: "crumple",
-            x: p.x + (Math.random() - 0.5) * fold,
-            y: p.y + (Math.random() - 0.5) * fold,
-            angle: angle + (Math.random() - 0.5) * Math.PI,
-            length: 8 + Math.random() * crumple,
-            alpha: 0.35 + Math.random() * 0.4,
-            width: 0.4 + Math.random() * 1.2,
-            frozen: false
-        });
-    }
-
-    if (friction > 0) {
-        for (let i = 0; i < friction / 12; i++) {
-            paperMarks.push({
-                type: "friction",
-                x: p.x + (Math.random() - 0.5) * fold * 1.2,
-                y: p.y + (Math.random() - 0.5) * fold * 1.2,
-                angle: angle + (Math.random() - 0.5) * 0.25,
-                length: 12 + Math.random() * friction,
-                alpha: 0.12 + Math.random() * 0.18,
-                width: 0.5,
-                frozen: false
-            });
-        }
-    }
+    if(impacts.length>90) impacts.shift();
 }
 
-function drawFabric(rgb) {
-    const life = val("fabric-life") * 0.0013;
-    const residue = val("fabric-residue") / 100;
-
-    ctx.save();
-    ctx.lineCap = "round";
-
-    for (let i = fabricMarks.length - 1; i >= 0; i--) {
-        const m = fabricMarks[i];
-
-        if (!m.frozen) {
-            m.phase += 0.035 * m.tension;
-            m.alpha -= life;
-        }
-
-        if (m.alpha <= residue) {
-            if (residue <= 0) {
-                fabricMarks.splice(i, 1);
-                continue;
-            } else {
-                m.alpha = residue;
-                m.frozen = true;
+function updateImpacts(){
+    for(let i=impacts.length-1;i>=0;i--){
+        const im=impacts[i];
+        im.age++;
+        const target=im.residue;
+        im.strength -= im.recover;
+        if(im.strength<=target){
+            if(target<=0){
+                impacts.splice(i,1);
+            }else{
+                im.strength=target;
             }
         }
+    }
+}
 
-        ctx.beginPath();
+function influenceAt(x,y,mode){
+    let z=0, sx=0, sy=0, pullX=0, pullY=0;
+    for(const im of impacts){
+        if(im.mode!==mode)continue;
+        const dx=x-im.x;
+        const dy=y-im.y;
+        const d=Math.hypot(dx,dy);
+        const r=im.radius;
+        if(d>r)continue;
 
-        const steps = 18;
-        for (let j = 0; j <= steps; j++) {
-            const t = j / steps;
-            const localX = (t - 0.5) * m.length;
-            const waveY = Math.sin(t * Math.PI * 2 + m.phase) * m.wave * (1 - Math.abs(t - 0.5));
-            const x = m.x + Math.cos(m.angle) * localX + Math.cos(m.angle + Math.PI / 2) * waveY;
-            const y = m.y + Math.sin(m.angle) * localX + Math.sin(m.angle + Math.PI / 2) * waveY;
+        const q=1-d/r;
+        const fall=q*q*(3-2*q);
+        const s=im.strength;
 
-            if (j === 0) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
+        if(mode===1){
+            const tension=val("fabric-tension")/100;
+            const dragForce=Math.hypot(im.dx,im.dy);
+            z += -im.depth*0.42*fall*s;
+            pullX += (im.dx*0.12 + dx*0.018*tension) * fall*s;
+            pullY += (im.dy*0.12 + dy*0.018*tension) * fall*s;
+            const wrinkle=Math.sin(d*0.18-im.age*0.07+im.seed)*val("fabric-wrinkle")*0.07*fall*s;
+            z += wrinkle;
         }
 
-        ctx.strokeStyle = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${m.alpha})`;
-        ctx.lineWidth = m.width;
-        ctx.stroke();
+        if(mode===2){
+            const bulge=val("rubber-bulge")/100;
+            const elastic=val("rubber-elastic")/100;
+            z += -im.depth*0.75*fall*s;
+            const ring=Math.exp(-Math.pow((d-r*0.52)/(r*0.18),2));
+            z += im.depth*bulge*0.48*ring*s;
+            const wobble=Math.sin(im.age*0.22+d*0.08)*elastic*5*fall*s;
+            z += wobble;
+        }
 
-        ctx.strokeStyle = `rgba(255,255,255,${m.alpha * 0.12})`;
-        ctx.lineWidth = m.width * 0.35;
+        if(mode===3){
+            const sharp=val("paper-sharp")/100;
+            const crumple=val("paper-crumple")/100;
+            z += -im.depth*0.26*fall*s;
+            const lineDist=Math.abs(Math.sin(Math.atan2(dy,dx)-im.angle))*d;
+            const crease=Math.exp(-lineDist*lineDist/(60*(1.1-sharp)+4))*fall;
+            z += -im.depth*0.22*crease*s;
+            z += Math.sin((x*0.07+y*0.05)+im.seed)*crumple*4*fall*s;
+        }
+    }
+    return {z,sx,sy,pullX,pullY};
+}
+
+function drawFabric(w,h,rgb){
+    const density=val("fabric-density");
+    const spacing=Math.max(8,80-density);
+    const base=rgb;
+
+    const grad=ctx.createLinearGradient(0,0,w,h);
+    grad.addColorStop(0,rgbString(shade(base,18),1));
+    grad.addColorStop(0.5,rgbString(base,1));
+    grad.addColorStop(1,rgbString(shade(base,-32),1));
+    ctx.fillStyle=grad;
+    ctx.fillRect(0,0,w,h);
+
+    ctx.save();
+    ctx.lineCap="round";
+
+    for(let y=-spacing;y<h+spacing;y+=spacing){
+        ctx.beginPath();
+        for(let x=-20;x<w+20;x+=12){
+            const inf=influenceAt(x,y,1);
+            const nx=x+inf.pullX;
+            const ny=y+inf.pullY + Math.sin(x*0.025+time*0.01)*1.4 + inf.z*0.18;
+            if(x<=-20)ctx.moveTo(nx,ny);
+            else ctx.lineTo(nx,ny);
+        }
+        ctx.strokeStyle="rgba(255,255,255,0.16)";
+        ctx.lineWidth=1.2;
         ctx.stroke();
     }
 
-    ctx.restore();
-}
-
-function drawRubber(rgb) {
-    const elastic = val("rubber-elastic") / 100;
-    const bounce = val("rubber-bounce") / 100;
-    const soft = val("rubber-soft") / 100;
-    const residue = val("rubber-residue") / 100;
-
-    ctx.save();
-
-    for (let i = rubberBlobs.length - 1; i >= 0; i--) {
-        const b = rubberBlobs[i];
-
-        if (!b.frozen) {
-            b.wobble += 0.12 + bounce * 0.12;
-            b.x += b.vx;
-            b.y += b.vy;
-
-            b.vx += (b.baseX - b.x) * 0.035 * elastic;
-            b.vy += (b.baseY - b.y) * 0.035 * elastic;
-
-            b.vx *= 0.86 + soft * 0.08;
-            b.vy *= 0.86 + soft * 0.08;
-
-            b.scaleX += (1 - b.scaleX) * 0.04 * elastic;
-            b.scaleY += (1 - b.scaleY) * 0.04 * elastic;
-
-            b.alpha -= 0.006;
-        }
-
-        if (b.alpha <= residue) {
-            if (residue <= 0) {
-                rubberBlobs.splice(i, 1);
-                continue;
-            } else {
-                b.alpha = residue;
-                b.frozen = true;
-            }
-        }
-
-        ctx.save();
-        ctx.translate(b.x, b.y);
-        ctx.rotate(b.angle + Math.sin(b.wobble) * 0.08);
-        ctx.scale(b.scaleX + Math.sin(b.wobble) * 0.04, b.scaleY + Math.cos(b.wobble) * 0.04);
-
-        const grad = ctx.createRadialGradient(-b.r * 0.3, -b.r * 0.35, b.r * 0.1, 0, 0, b.r);
-        grad.addColorStop(0, `rgba(255,255,255,${b.alpha * 0.35})`);
-        grad.addColorStop(0.25, `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${b.alpha})`);
-        grad.addColorStop(0.82, `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${b.alpha * 0.82})`);
-        grad.addColorStop(1, `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0)`);
-
-        ctx.fillStyle = grad;
+    for(let x=-spacing;x<w+spacing;x+=spacing){
         ctx.beginPath();
-        ctx.arc(0, 0, b.r, 0, Math.PI * 2);
+        for(let y=-20;y<h+20;y+=12){
+            const inf=influenceAt(x,y,1);
+            const nx=x+inf.pullX + Math.sin(y*0.02)*0.8;
+            const ny=y+inf.pullY + inf.z*0.18;
+            if(y<=-20)ctx.moveTo(nx,ny);
+            else ctx.lineTo(nx,ny);
+        }
+        ctx.strokeStyle="rgba(0,0,0,0.12)";
+        ctx.lineWidth=1;
+        ctx.stroke();
+    }
+
+    for(const im of impacts){
+        if(im.mode!==1)continue;
+        const a=im.strength;
+        const g=ctx.createRadialGradient(im.x,im.y,5,im.x,im.y,im.radius);
+        g.addColorStop(0,`rgba(0,0,0,${0.28*a})`);
+        g.addColorStop(0.48,`rgba(0,0,0,${0.08*a})`);
+        g.addColorStop(1,"rgba(255,255,255,0)");
+        ctx.fillStyle=g;
+        ctx.beginPath();
+        ctx.arc(im.x,im.y,im.radius,0,Math.PI*2);
         ctx.fill();
 
-        ctx.restore();
-    }
-
-    ctx.restore();
-}
-
-function drawPaper(rgb) {
-    const dry = val("paper-dry") / 100;
-    const residue = val("paper-residue") / 100;
-    const decay = (1 - dry) * 0.006 + 0.001;
-
-    ctx.save();
-    ctx.lineCap = "round";
-
-    for (let i = paperMarks.length - 1; i >= 0; i--) {
-        const m = paperMarks[i];
-
-        if (!m.frozen) {
-            m.alpha -= decay;
-        }
-
-        if (m.alpha <= residue) {
-            if (residue <= 0) {
-                paperMarks.splice(i, 1);
-                continue;
-            } else {
-                m.alpha = residue;
-                m.frozen = true;
-            }
-        }
-
-        const x1 = m.x - Math.cos(m.angle) * m.length * 0.5;
-        const y1 = m.y - Math.sin(m.angle) * m.length * 0.5;
-        const x2 = m.x + Math.cos(m.angle) * m.length * 0.5;
-        const y2 = m.y + Math.sin(m.angle) * m.length * 0.5;
-
-        if (m.type === "fold") {
-            ctx.strokeStyle = `rgba(0,0,0,${m.alpha * 0.42})`;
-            ctx.lineWidth = m.width;
-            ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
-            ctx.stroke();
-
-            ctx.strokeStyle = `rgba(255,255,255,${m.alpha * 0.5})`;
-            ctx.lineWidth = m.width * 0.55;
-            ctx.beginPath();
-            ctx.moveTo(x1 + 2, y1 + 2);
-            ctx.lineTo(x2 + 2, y2 + 2);
-            ctx.stroke();
-        }
-
-        if (m.type === "crumple") {
-            ctx.strokeStyle = `rgba(0,0,0,${m.alpha * 0.55})`;
-            ctx.lineWidth = m.width;
-            ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
-            ctx.stroke();
-        }
-
-        if (m.type === "friction") {
-            ctx.strokeStyle = `rgba(80,80,80,${m.alpha})`;
-            ctx.lineWidth = m.width;
-            ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
-            ctx.stroke();
-        }
-    }
-
-    ctx.restore();
-}
-
-function drawPaperBase(w, h) {
-    ctx.save();
-    ctx.fillStyle = el("materialColor").value;
-    ctx.fillRect(0, 0, w, h);
-
-    ctx.globalAlpha = 0.08;
-    ctx.strokeStyle = "#000";
-    ctx.lineWidth = 1;
-
-    for (let y = 0; y < h; y += 18) {
+        const hi=ctx.createRadialGradient(im.x-im.radius*.25,im.y-im.radius*.25,0,im.x,im.y,im.radius);
+        hi.addColorStop(0,`rgba(255,255,255,${0.16*a})`);
+        hi.addColorStop(.65,"rgba(255,255,255,0)");
+        ctx.fillStyle=hi;
         ctx.beginPath();
-        ctx.moveTo(0, y + Math.sin(y * 0.03) * 2);
-        ctx.lineTo(w, y + Math.sin(y * 0.03) * 2);
+        ctx.arc(im.x,im.y,im.radius,0,Math.PI*2);
+        ctx.fill();
+    }
+
+    ctx.restore();
+}
+
+function drawRubber(w,h,rgb){
+    const base=rgb;
+
+    const grad=ctx.createLinearGradient(0,0,w,h);
+    grad.addColorStop(0,rgbString(shade(base,35),1));
+    grad.addColorStop(0.45,rgbString(base,1));
+    grad.addColorStop(1,rgbString(shade(base,-45),1));
+    ctx.fillStyle=grad;
+    ctx.fillRect(0,0,w,h);
+
+    const step=26;
+    ctx.save();
+
+    for(let y=0;y<h;y+=step){
+        ctx.beginPath();
+        for(let x=0;x<w;x+=10){
+            const inf=influenceAt(x,y,2);
+            const nx=x;
+            const ny=y+inf.z*0.12;
+            if(x===0)ctx.moveTo(nx,ny);
+            else ctx.lineTo(nx,ny);
+        }
+        ctx.strokeStyle="rgba(255,255,255,0.055)";
+        ctx.lineWidth=1;
+        ctx.stroke();
+    }
+
+    for(const im of impacts){
+        if(im.mode!==2)continue;
+        const a=im.strength;
+        const r=im.radius;
+
+        const shadow=ctx.createRadialGradient(im.x,im.y,0,im.x,im.y,r);
+        shadow.addColorStop(0,`rgba(0,0,0,${0.5*a})`);
+        shadow.addColorStop(0.45,`rgba(0,0,0,${0.22*a})`);
+        shadow.addColorStop(0.75,`rgba(255,255,255,${0.14*a})`);
+        shadow.addColorStop(1,"rgba(255,255,255,0)");
+        ctx.fillStyle=shadow;
+        ctx.beginPath();
+        ctx.arc(im.x,im.y,r,0,Math.PI*2);
+        ctx.fill();
+
+        const highlight=ctx.createRadialGradient(im.x-r*.28,im.y-r*.32,0,im.x,im.y,r*.95);
+        highlight.addColorStop(0,`rgba(255,255,255,${0.35*a})`);
+        highlight.addColorStop(0.38,`rgba(255,255,255,${0.08*a})`);
+        highlight.addColorStop(1,"rgba(255,255,255,0)");
+        ctx.fillStyle=highlight;
+        ctx.beginPath();
+        ctx.arc(im.x,im.y,r,0,Math.PI*2);
+        ctx.fill();
+
+        ctx.strokeStyle=`rgba(255,255,255,${0.22*a})`;
+        ctx.lineWidth=2;
+        ctx.beginPath();
+        ctx.ellipse(im.x,im.y,r*.58,r*.38,Math.sin(im.age*.08)*.2,0,Math.PI*2);
         ctx.stroke();
     }
 
     ctx.restore();
 }
 
-function animate() {
-    const rect = canvas.getBoundingClientRect();
-    const w = rect.width;
-    const h = rect.height;
+function drawPaper(w,h,rgb){
+    const base=rgb;
+    ctx.fillStyle=rgbString(base,1);
+    ctx.fillRect(0,0,w,h);
 
-    const bg = el("bgColor").value;
-    const rgb = hexToRgb(el("materialColor").value);
+    const grain=val("paper-grain");
+    ctx.save();
 
-    ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, w, h);
-
-    if (currentMode === 3) {
-        drawPaperBase(w, h);
+    for(let y=0;y<h;y+=8){
+        ctx.strokeStyle=`rgba(0,0,0,${0.012+grain/9000})`;
+        ctx.lineWidth=1;
+        ctx.beginPath();
+        ctx.moveTo(0,y+Math.sin(y*.08)*0.6);
+        ctx.lineTo(w,y+Math.sin(y*.08)*0.6);
+        ctx.stroke();
     }
 
-    if (currentMode === 1) drawFabric(rgb);
-    if (currentMode === 2) drawRubber(rgb);
-    if (currentMode === 3) drawPaper(rgb);
+    for(const im of impacts){
+        if(im.mode!==3)continue;
+        const a=im.strength;
+        const r=im.radius;
+        const sharp=val("paper-sharp")/100;
+
+        const dent=ctx.createRadialGradient(im.x,im.y,0,im.x,im.y,r);
+        dent.addColorStop(0,`rgba(0,0,0,${0.18*a})`);
+        dent.addColorStop(0.45,`rgba(0,0,0,${0.055*a})`);
+        dent.addColorStop(0.72,`rgba(255,255,255,${0.12*a})`);
+        dent.addColorStop(1,"rgba(255,255,255,0)");
+        ctx.fillStyle=dent;
+        ctx.beginPath();
+        ctx.arc(im.x,im.y,r,0,Math.PI*2);
+        ctx.fill();
+
+        const creaseCount=Math.floor(5+val("paper-crumple")/8);
+        for(let i=0;i<creaseCount;i++){
+            const ang=im.angle+(i-creaseCount/2)*0.22+Math.sin(im.seed+i)*0.6;
+            const len=r*(0.25+Math.abs(Math.sin(im.seed+i))*0.65);
+            const ox=Math.cos(ang+Math.PI/2)*(Math.sin(im.seed+i*2)*r*.35);
+            const oy=Math.sin(ang+Math.PI/2)*(Math.sin(im.seed+i*2)*r*.35);
+            const cx=im.x+ox;
+            const cy=im.y+oy;
+
+            ctx.strokeStyle=`rgba(0,0,0,${(0.12+sharp*.18)*a})`;
+            ctx.lineWidth=0.7+sharp*1.4;
+            ctx.beginPath();
+            ctx.moveTo(cx-Math.cos(ang)*len*.5,cy-Math.sin(ang)*len*.5);
+            ctx.lineTo(cx+Math.cos(ang)*len*.5,cy+Math.sin(ang)*len*.5);
+            ctx.stroke();
+
+            ctx.strokeStyle=`rgba(255,255,255,${0.18*a})`;
+            ctx.lineWidth=0.7;
+            ctx.beginPath();
+            ctx.moveTo(cx-Math.cos(ang)*len*.5+1.6,cy-Math.sin(ang)*len*.5+1.6);
+            ctx.lineTo(cx+Math.cos(ang)*len*.5+1.6,cy+Math.sin(ang)*len*.5+1.6);
+            ctx.stroke();
+        }
+    }
+
+    ctx.restore();
+}
+
+function animate(){
+    time++;
+    updateImpacts();
+
+    const rect=canvas.getBoundingClientRect();
+    const w=rect.width;
+    const h=rect.height;
+    const bg=el("bgColor").value;
+    const rgb=hexToRgb(el("materialColor").value);
+
+    ctx.clearRect(0,0,w,h);
+    ctx.fillStyle=bg;
+    ctx.fillRect(0,0,w,h);
+
+    if(currentMode===1)drawFabric(w,h,rgb);
+    if(currentMode===2)drawRubber(w,h,rgb);
+    if(currentMode===3)drawPaper(w,h,rgb);
 
     requestAnimationFrame(animate);
 }
